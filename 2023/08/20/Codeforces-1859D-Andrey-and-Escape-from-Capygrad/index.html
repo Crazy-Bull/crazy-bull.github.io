@@ -1,231 +1,413 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Codeforces 1859D Andrey and Escape from Capygrad | Crazy_Bull&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="题意    有n个传送门，每个传送门有四个参数 l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r，表示当你的位置在 [l, r] 上时，可以选择传送到 [a, b] 上的任意一个点。     随后有 q 个询问，每个询问给出一个坐标 x 代表你的起始位置，对于每个输入 x，输出通过传送门能最右到达的位置。  数据范围1 &lt;&#x3D; n &lt;&#x3D; 2⋅10^5^1 &lt;&amp;">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"crazy-bull.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题意    有n个传送门，每个传送门有四个参数 l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r，表示当你的位置在 [l, r] 上时，可以选择传送到 [a, b] 上的任意一个点。     随后有 q 个询问，每个询问给出一个坐标 x 代表你的起始位置，对于每个输入 x，输出通过传送门能最右到达的位置。  数据范围1 &lt;&#x3D; n &lt;&#x3D; 2⋅1051 &lt;&amp;#x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Codeforces 1859D Andrey and Escape from Capygrad">
 <meta property="og:url" content="https://crazy-bull.github.io/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/index.html">
 <meta property="og:site_name" content="Crazy_Bull&#39;s Blog">
-<meta property="og:description" content="题意    有n个传送门，每个传送门有四个参数 l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r，表示当你的位置在 [l, r] 上时，可以选择传送到 [a, b] 上的任意一个点。     随后有 q 个询问，每个询问给出一个坐标 x 代表你的起始位置，对于每个输入 x，输出通过传送门能最右到达的位置。  数据范围1 &lt;&#x3D; n &lt;&#x3D; 2⋅10^5^1 &lt;&amp;">
+<meta property="og:description" content="题意    有n个传送门，每个传送门有四个参数 l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r，表示当你的位置在 [l, r] 上时，可以选择传送到 [a, b] 上的任意一个点。     随后有 q 个询问，每个询问给出一个坐标 x 代表你的起始位置，对于每个输入 x，输出通过传送门能最右到达的位置。  数据范围1 &lt;&#x3D; n &lt;&#x3D; 2⋅1051 &lt;&amp;#x">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-08-20T15:22:02.000Z">
-<meta property="article:modified_time" content="2023-08-21T09:30:42.465Z">
+<meta property="article:modified_time" content="2023-08-22T14:42:00.127Z">
 <meta property="article:author" content="crazybull">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Crazy_Bull's Blog" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<link rel="canonical" href="https://crazy-bull.github.io/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-  
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Crazy_Bull&#39;s Blog</a>
-      </h1>
-      
+  <title>Codeforces 1859D Andrey and Escape from Capygrad | Crazy_Bull's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://crazy-bull.github.io"></form>
-      </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Crazy_Bull's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-Codeforces-1859D-Andrey-and-Escape-from-Capygrad" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/" class="article-date">
-  <time class="dt-published" datetime="2023-08-20T15:22:02.000Z" itemprop="datePublished">2023-08-20</time>
-</a>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-oi-notes">
+
+    <a href="/categories/OI" rel="section"><i class="fa fa-code fa-fw"></i>OI notes</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/OI/">OI</a>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      Codeforces 1859D Andrey and Escape from Capygrad
-    </h1>
-  
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="crazybull">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crazy_Bull's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces 1859D Andrey and Escape from Capygrad
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-08-20 23:22:02" itemprop="dateCreated datePublished" datetime="2023-08-20T23:22:02+08:00">2023-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-22 22:42:00" itemprop="dateModified" datetime="2023-08-22T22:42:00+08:00">2023-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI/" itemprop="url" rel="index"><span itemprop="name">OI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><pre><code>    有n个传送门，每个传送门有四个参数 l &lt;= a &lt;= b &lt;= r，表示当你的位置在 [l, r] 上时，可以选择传送到 [a, b] 上的任意一个点。
     随后有 q 个询问，每个询问给出一个坐标 x 代表你的起始位置，对于每个输入 x，输出通过传送门能最右到达的位置。
 </code></pre>
-<h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;&#x3D; n &lt;&#x3D; 2⋅10^5^<br>1 &lt;&#x3D; l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r &lt;&#x3D; 10^9^<br>1 &lt;&#x3D; q &lt;&#x3D; 2⋅10^5^<br>1 &lt;&#x3D; q &lt;&#x3D; 10^9^</p>
+<h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;&#x3D; n &lt;&#x3D; 2⋅10<sup>5</sup><br>1 &lt;&#x3D; l &lt;&#x3D; a &lt;&#x3D; b &lt;&#x3D; r &lt;&#x3D; 10<sup>9</sup><br>1 &lt;&#x3D; q &lt;&#x3D; 2⋅10<sup>5</sup><br>1 &lt;&#x3D; q &lt;&#x3D; 10<sup>9</sup></p>
+<span id="more"></span>
 <h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先我们考虑在一个特定位置上时我们会如何行动<br>如果我们在一个没有传送门的位置，我们本身无法行动<br>如果我们在一个有传送门的位置，我们首先证明：我们无需考虑向左传送</p>
-<p><strong>Proof:</strong><br>反证法：如果最佳路径种包含由点 x<del>1</del> 传送到 x<del>2</del> ，其中 x<del>2</del> &lt; x<del>1</del> ，由于题目中要求终点尽可能在右侧，则一定有终点 d &gt; x<del>1</del> （否则可以不经过后续路径而停留在 x<del>1</del> ）<br>设依次经过的传送门分别为 p<del>1</del>, p<del>2</del>, …, p<del>m</del><br><strong>Definition:</strong> 如果两条线段 [l<del>1</del>, r<del>1</del>], [l<del>2</del>, r<del>2</del>] 满足 l<del>1</del> ≤ r<del>2</del> 或 l<del>2</del> ≤ r<del>1</del> ，称它们是 <strong>“相交的”</strong><br>不难发现，p<del>i</del> 与 p<del>i+1</del> 对应的线段一定是相交的（由 [a, b] 包含于 [l, r] 保证）<br>从而这些传送门对应 [l, r] 线段的并集恰为区间 [min{p<del>i</del>.l}, max{p<del>i</del>.r}]<br>不难发现， min{p<del>i</del>.l} &lt;&#x3D; x<del>2</del> &lt; x<del>1</del> &lt; d &lt;&#x3D; max{p<del>i</del>.r}，即 x<del>1</del> 在区间内<br>从而存在一个 p<del>i</del> 使得 x<del>1</del> 在其对应的 [l, r] 线段内，则无需经过 x<del>2</del> 而直接通过此传送门传送即可</p>
+<p><strong>Proof:</strong><br>反证法：如果最佳路径种包含由点 x<sub>1</sub> 传送到 x<sub>2</sub> ，其中 x<sub>2</sub> &lt; x<sub>1</sub> ，由于题目中要求终点尽可能在右侧，则一定有终点 d &gt; x<sub>1</sub> （否则可以不经过后续路径而停留在 x<sub>1</sub> ）<br>设依次经过的传送门分别为 p<sub>1</sub>, p<sub>2</sub>, …, p<sub>m</sub><br><strong>Definition:</strong> 如果两条线段 [l<sub>1</sub>, r<sub>1</sub>], [l<sub>2</sub>, r<sub>2</sub>] 满足 l<sub>1</sub> ≤ r<sub>2</sub> 或 l<sub>2</sub> ≤ r<sub>1</sub> ，称它们是 <strong>“相交的”</strong><br>不难发现，p<sub>i</sub> 与 p<sub>i+1</sub> 对应的线段一定是相交的（由 [a, b] 包含于 [l, r] 保证）<br>从而这些传送门对应 [l, r] 线段的并集恰为区间 [min{p<sub>i</sub>.l}, max{p<sub>i</sub>.r}]<br>不难发现， min{p<sub>i</sub>.l} &lt;&#x3D; x<sub>2</sub> &lt; x<sub>1</sub> &lt; d &lt;&#x3D; max{p<sub>i</sub>.r}，即 x<sub>1</sub> 在区间内<br>从而存在一个 p<sub>i</sub> 使得 x<sub>1</sub> 在其对应的 [l, r] 线段内，则无需经过 x<sub>2</sub> 而直接通过此传送门传送即可</p>
 <p><strong>推论:</strong>  每次传送一定会传送至该传送门的 b 处（否则等效为先传送至 b 再传送至 b 点左侧的某点，由上文知矛盾）</p>
 <p>这样我们发现，由于 a 在 b 的左侧， r 在 b 的右侧，故<strong>传送门的 a 和 r 参数是无用的</strong><br>因此我们可以用 [l, b] 代表一个传送门的效果：当你的位置在  [l, b) 上时，<strong>一定</strong>可以（无副作用地）传送至 b 处<br>容易想到，当两个传送门的 [l, b] 线段相交时，可以合并它们的线段，并用一个大线段替代其效果<br>合并的方法为：将线段按 l 关键字排序，若后一个 l 大于前一个（合并后）的线段，则后续所有线段与前面的线段都不相交，因此新开一个线段。否则将该线段与后者合并。<br>预处理完毕线段后，对每次查询，用二分查找找到其所属的（唯一）大线段，输出对应的 b 值即可。</p>
 <p>复杂度：O(nlogn+qlogn)</p>
 <p>###代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int n,t,a,b,q,x;</span><br><span class="line"> </span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">	int l,r;</span><br><span class="line">&#125; seg;</span><br><span class="line">seg s[200000+10];</span><br><span class="line">vector&lt;seg&gt; segments;</span><br><span class="line"> </span><br><span class="line">bool cmp(seg a,seg b)</span><br><span class="line">&#123;</span><br><span class="line">	return a.l&lt;b.l;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int bsearch(int x)</span><br><span class="line">&#123;</span><br><span class="line">	int len=segments.size();</span><br><span class="line">	int left=0,right=len-1;</span><br><span class="line">	while(left&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		int mid = (left+right)/2;</span><br><span class="line">		if(segments[mid].l&lt;=x&amp;&amp;segments[mid].r&gt;=x) return mid;</span><br><span class="line">		else if(segments[mid].l&lt;=x) left=mid+1;</span><br><span class="line">		else right=mid-1;</span><br><span class="line">	&#125;</span><br><span class="line">	return -1;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	ios::sync_with_stdio(false);</span><br><span class="line">	cin.tie(0);</span><br><span class="line">	cout.tie(0);</span><br><span class="line">	</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	while(t--)</span><br><span class="line">	&#123;</span><br><span class="line">		segments.clear();</span><br><span class="line">		cin&gt;&gt;n;</span><br><span class="line">		for(int i=1;i&lt;=n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cin&gt;&gt;s[i].l&gt;&gt;a&gt;&gt;b&gt;&gt;s[i].r;</span><br><span class="line">		&#125;</span><br><span class="line">		sort(s+1,s+n+1,cmp);</span><br><span class="line">		segments.push_back(&#123;s[1].l,s[1].r&#125;);</span><br><span class="line">		for(int i=2;i&lt;=n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int k=segments.size();</span><br><span class="line">			seg&amp; ss=segments[k-1];</span><br><span class="line">			if(s[i].l&lt;=ss.r) ss=&#123;ss.l,max(s[i].r,ss.r)&#125;;</span><br><span class="line">			else segments.push_back(s[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		cin&gt;&gt;q;</span><br><span class="line">		for(int i=1;i&lt;=q;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cin&gt;&gt;x;</span><br><span class="line">			int xx=bsearch(x);</span><br><span class="line">			if(xx==-1) cout&lt;&lt;x&lt;&lt;&quot; &quot;;</span><br><span class="line">			else cout&lt;&lt;segments[xx].r&lt;&lt;&quot; &quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout&lt;&lt;&#x27;\n&#x27;;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="https://crazy-bull.github.io/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/" data-id="cllkpnwuh0001istheey2d3uu" data-title="Codeforces 1859D Andrey and Escape from Capygrad" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/19/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4"><span class="nav-number">2.</span> <span class="nav-text">数据范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">crazybull</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">crazybull</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
     </footer>
   </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2023/08/19/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
 
   
-</article>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/OI/">OI</a></li></ul>
-    </div>
-  </div>
+<script src="/js/schemes/muse.js"></script>
 
 
-  
-    
+<script src="/js/next-boot.js"></script>
 
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/08/20/Codeforces-1859D-Andrey-and-Escape-from-Capygrad/">Codeforces 1859D Andrey and Escape from Capygrad</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/19/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2023 crazybull<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
