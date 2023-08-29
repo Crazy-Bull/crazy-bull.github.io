@@ -267,6 +267,88 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/29/Codeforces-1862G-The-Great-Equalizer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="crazybull">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crazy_Bull's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/29/Codeforces-1862G-The-Great-Equalizer/" class="post-title-link" itemprop="url">Codeforces 1862G The Great Equalizer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-08-29 17:26:50 / Modified: 17:33:30" itemprop="dateCreated datePublished" datetime="2023-08-29T17:26:50+08:00">2023-08-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI/" itemprop="url" rel="index"><span itemprop="name">OI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>（题目原表述比较复杂，这里描述得尽可能简单一些）<br>    对于长为 n 的数列 a，定义一次操作如下几步构成：</p>
+<pre><code>1. 将 a 按升序排列，并去除重复元素
+2. 若 a 只剩一个元素，结束，否则转向 3
+3. 对 1 &lt;= i &lt;= n，将 a[i] 加上 (n-i+1)
+对 a 进行若干次（可能为 0 次）操作后，a 最后只剩下一个数，记为 f(a)，注意 n 在两次操作间可能会变化。
+现给定一个长为 n 的初始数列 a 和 q 次询问，每次询问给定两个数 i,x，并重新赋值 a[i] = x，
+（每次赋值在后续询问中保留），求每次询问后的 f(a)
+</code></pre><h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;= n, q &lt;= 2·10<sup>5</sup><br>1 &lt;= a<sub>i</sub>, x &lt;= 10<sup>9</sup><br>1 &lt;= i &lt;= n<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/29/Codeforces-1862G-The-Great-Equalizer/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/27/Codeforces-1838E-Count-Supersequences/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -292,7 +374,7 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-08-27 14:43:12 / Modified: 15:06:56" itemprop="dateCreated datePublished" datetime="2023-08-27T14:43:12+08:00">2023-08-27</time>
+              <time title="Created: 2023-08-27 14:43:12 / Modified: 15:11:31" itemprop="dateCreated datePublished" datetime="2023-08-27T14:43:12+08:00">2023-08-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,14 +402,14 @@ mjx-container[display="true"] + br {
 
 * 注：子序列可以不连续
 </code></pre><h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;= n &lt;= 2·10<sup>5</sup><br>n &lt;= m &lt;= 10<sup>9</sup><br>1 &lt;= k &lt;= 10<sup>9</sup><br>1 &lt;= a<sub>i</sub> &lt;= 10<sup>9</sup></p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>数据范围要求时间复杂度应尽可能避免与 m，k 有关，因此朴素的 dp 是行不通的。但是我们不妨先考虑如果 n, m 不大时的 dp 做法。事实上，这会导出一个有用的结论，从而把时间复杂度优化到 O(nlogM) （此处 M 指模数）</p>
-<p>令 dp[i][j] 为包含前 i 个元素为其子序列，长为 j 的数组个数。则不难得出状态转移方程：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = (k-1) dp[i][j-1] + dp[i-1][j-1] (1 &lt;= i &lt;= j)</span><br><span class="line">dp[i][i] = 1</span><br><span class="line">dp[0][j] = k^j</span><br></pre></td></tr></table></figure><br>初始条件由 dp 数组的意义显然，转移方程的第一项代表 b<sub>j</sub> 不为 a<sub>i</sub> 时，b 的前 j-1 项包含 a 的前 i 项为子序列，此时 b<sub>j</sub> 共有 k-1 种取值；同理，第二项代表 b<sub>j</sub> 为 a<sub>i</sub> 时，b 的前 j-1 项包含 a 的前 i-1 项为子序列，，此时 b<sub>j</sub> 只有 1 种取值（即a<sub>i</sub>）</p>
-<p>我们注意到，状态转移方程与数组 a 完全无关，这也意味着答案<strong>与 a<sub>i</sub> 的取值无关</strong>，从而我们可以设 <strong>a<sub>i</sub> = 1</strong> (1 &lt;= i &lt;= n)</p>
-<p>当然，b 包含 n 个 1 作为其子序列，当且仅当 b 中包含 n 或更多的 1。考虑到复杂度应与 n 相关，故转化为所有可能的 b 数列减去包含 0 ~ n-1 个 1 的数列个数，而恰包含 i 个 1 的数列个数为 <script type="math/tex">C_{m}^{i} \bullet (k-1)^{m-i}</script></p>
-<p>因此答案为</p>
-<script type="math/tex; mode=display">
-k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂的计算可用递推处理，逆元使用快速幂处理即可（有费马小定理，x 关于素数 p 的逆元为 x<sup>p-2</sup>）</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">const int MOD=1e9+7, N=2e5+10;</span><br><span class="line">int t,n,m,k,a;</span><br><span class="line"></span><br><span class="line">ll fpow(ll a,ll k)</span><br><span class="line">{</span><br><span class="line">	ll res = 1;</span><br><span class="line">	while(k)</span><br><span class="line">	{</span><br><span class="line">		if(k&amp;1) res=res*a%MOD;</span><br><span class="line">		a=a*a%MOD; </span><br><span class="line">		k&gt;&gt;=1;</span><br><span class="line">	}</span><br><span class="line">	return res%MOD;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	while(t--)</span><br><span class="line">	{</span><br><span class="line">		cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;</span><br><span class="line">		for(int i=1;i&lt;=n;i++) cin&gt;&gt;a;</span><br><span class="line">		</span><br><span class="line">		ll ans=fpow(k,m),rev=fpow(k-1,MOD-2),sub=fpow(k-1,m);</span><br><span class="line">		ans-=sub;</span><br><span class="line">		if(ans&lt;0) ans+=MOD;</span><br><span class="line">		for(int i=1;i&lt;n;i++)</span><br><span class="line">		{</span><br><span class="line">			sub=sub*rev%MOD;</span><br><span class="line">			sub=sub*(m+1-i)%MOD;</span><br><span class="line">			sub=sub*fpow(i,MOD-2)%MOD;</span><br><span class="line">			ans-=sub;</span><br><span class="line">			if(ans&lt;0) ans+=MOD;</span><br><span class="line">		}</span><br><span class="line">		cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">	}</span><br><span class="line">	return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/27/Codeforces-1838E-Count-Supersequences/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -633,7 +715,7 @@ k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -644,7 +726,7 @@ k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂�
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

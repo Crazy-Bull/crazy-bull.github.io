@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"crazy-bull.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题意（题目原表述比较复杂，这里描述得尽可能简单一些）    对于长为 n 的数列 a，定义一次操作如下几步构成： 1. 将 a 按升序排列，并去除重复元素 2. 若 a 只剩一个元素，结束，否则转向 3 3. 对 1 &lt;&#x3D; i &lt;&#x3D; n，将 a[i] 加上 (n-i+1) 对 a 进行若干次（可能为 0 次）操作后，a 最后只剩下一个数，记为 f(a)，注意 n 在两次操作间可能会变化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces 1862G The Great Equalizer">
+<meta property="og:url" content="https://crazy-bull.github.io/2023/08/29/Codeforces-1862G-The-Great-Equalizer/index.html">
+<meta property="og:site_name" content="Crazy_Bull&#39;s Blog">
+<meta property="og:description" content="题意（题目原表述比较复杂，这里描述得尽可能简单一些）    对于长为 n 的数列 a，定义一次操作如下几步构成： 1. 将 a 按升序排列，并去除重复元素 2. 若 a 只剩一个元素，结束，否则转向 3 3. 对 1 &lt;&#x3D; i &lt;&#x3D; n，将 a[i] 加上 (n-i+1) 对 a 进行若干次（可能为 0 次）操作后，a 最后只剩下一个数，记为 f(a)，注意 n 在两次操作间可能会变化">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-29T09:26:50.000Z">
+<meta property="article:modified_time" content="2023-08-29T09:33:30.856Z">
+<meta property="article:author" content="crazybull">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="红黑树">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://crazy-bull.github.io/2023/08/29/Codeforces-1862G-The-Great-Equalizer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Codeforces 1862G The Great Equalizer | Crazy_Bull's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Crazy_Bull's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-oi-notes">
+
+    <a href="/categories/OI" rel="section"><i class="fa fa-code fa-fw"></i>OI notes</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/29/Codeforces-1862G-The-Great-Equalizer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="crazybull">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crazy_Bull's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces 1862G The Great Equalizer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-08-29 17:26:50 / Modified: 17:33:30" itemprop="dateCreated datePublished" datetime="2023-08-29T17:26:50+08:00">2023-08-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI/" itemprop="url" rel="index"><span itemprop="name">OI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>（题目原表述比较复杂，这里描述得尽可能简单一些）<br>    对于长为 n 的数列 a，定义一次操作如下几步构成：</p>
+<pre><code>1. 将 a 按升序排列，并去除重复元素
+2. 若 a 只剩一个元素，结束，否则转向 3
+3. 对 1 &lt;= i &lt;= n，将 a[i] 加上 (n-i+1)
+对 a 进行若干次（可能为 0 次）操作后，a 最后只剩下一个数，记为 f(a)，注意 n 在两次操作间可能会变化。
+现给定一个长为 n 的初始数列 a 和 q 次询问，每次询问给定两个数 i,x，并重新赋值 a[i] = x，
+（每次赋值在后续询问中保留），求每次询问后的 f(a)
+</code></pre><h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;= n, q &lt;= 2·10<sup>5</sup><br>1 &lt;= a<sub>i</sub>, x &lt;= 10<sup>9</sup><br>1 &lt;= i &lt;= n<br><span id="more"></span></p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>显然时间复杂度不允许我们进行即使是第一次的模拟，因此对于给定的 a，我们需要给出一个尽可能简单的 f(a) 的表达式。</p>
+<p>这个表达式是 <script type="math/tex">max\{a_{i}\} + max\{a_{i+1} - a_{i}\}</script>，证明如下：</p>
+<p>首先，容易发现 f(a) 与 a 内部元素的顺序无关，于是我们<strong>不妨设 a 是递增的</strong>。<br>这样，我们可以将步骤 1 作为初始条件（即 a 递增），并定义 （2 -&gt; 3 -&gt; 1）为一次操作。<br>我们可以不进行去重操作，而是将重复的项保留但一同变化，观察数列相邻两项的差值变化，可以发现差值在一次操作中永远减小 1（除非其已经为 0，将一直保持为 0）。于是在 <script type="math/tex">max\{a_{i+1} - a_{i}\}</script> 次操作后，所有差值变为 0，对应只剩下一个数。而每次操作中，最大数 <script type="math/tex">max\{a_{i}\}</script> 增加 1，于是操作结束时，所有数变为 <script type="math/tex">max\{a_{i}\} + max\{a_{i+1} - a_{i}\}</script> ，即 f(a)</p>
+<p>于是问题转化为如何维护 <script type="math/tex">max\{a_{i}\} + max\{a_{i+1} - a_{i}\}</script></p>
+<p>我们将 a<sub>i</sub> 重新赋值为a<sub>i</sub>‘时，会对（可重）集合 <script type="math/tex">\{a_{i+1} - a_{i}\}</script> 有如下影响：</p>
+<ol>
+<li>去除在 a 的升序排列中，与 a<sub>i</sub> 相邻的两个数与 a<sub>i</sub> 的差值</li>
+<li>增加与 a<sub>i</sub> 相邻的两个数的差值</li>
+<li>增加在 a’ 的升序排列中，与 a<sub>i</sub>‘ 相邻的两个数与 a<sub>i</sub>‘ 的差值</li>
+<li>去除与 a<sub>i</sub>‘ 相邻的两个数的差值</li>
+</ol>
+<p>（ a<sub>i</sub> 或 a<sub>i</sub>‘ 在数列头尾时需要特判）</p>
+<p>那么我们更新 <script type="math/tex">\{a_{i+1} - a_{i}\}</script> 时，需要知道 a<sub>i</sub> 在升序排列中的前后项，此时使用（非退化的）二叉搜索树维护集合 {a<sub>i</sub>} 即可在 O(logn) 的时间复杂度内获得所需要的信息。<br>同时，二叉搜索树也能在 O(logn) 的复杂度内求得最大值。</p>
+<p>在 STL 中，std::multiset 为一个由红黑树实现的，可重的有序集合，使用其迭代器可以在 O(logn) 的复杂度内完成 insert, erase, find 操作，于是我们用 multiset 维护这两个集合即可</p>
+<p>当然，使用 STL 的常数比较大，不过这题给的时限 4s 很宽不用担心 TLE，如果时限紧一些可能需要手搓红黑树（</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int N=200000+10;</span><br><span class="line"></span><br><span class="line">int t,n,q,a[N],tmp[N];</span><br><span class="line">multiset&lt;int&gt; mx,mxdiff;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	ios::sync_with_stdio(false);</span><br><span class="line">	cin.tie(0);</span><br><span class="line">	cout.tie(0);</span><br><span class="line">	</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	while(t--)</span><br><span class="line">	&#123;</span><br><span class="line">		mx.clear();</span><br><span class="line">		mxdiff.clear();</span><br><span class="line">		cin&gt;&gt;n;</span><br><span class="line">		for(int i=1;i&lt;=n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			cin&gt;&gt;a[i];</span><br><span class="line">			mx.insert(a[i]);</span><br><span class="line">			tmp[i]=a[i];</span><br><span class="line">		&#125;</span><br><span class="line">		sort(tmp+1,tmp+n+1);</span><br><span class="line">		for(int i=1;i&lt;n;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			mxdiff.insert(tmp[i+1]-tmp[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		cin&gt;&gt;q;</span><br><span class="line">		while(q--)</span><br><span class="line">		&#123;</span><br><span class="line">			int i,x;</span><br><span class="line">			cin&gt;&gt;i&gt;&gt;x;</span><br><span class="line">			if(n==1)</span><br><span class="line">			&#123;</span><br><span class="line">				cout&lt;&lt;x&lt;&lt;&quot; &quot;;</span><br><span class="line">				continue;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			auto it=mx.find(a[i]);</span><br><span class="line">			if(it==mx.begin())</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.erase(mxdiff.find(*next(it)-*it));</span><br><span class="line">			&#125;</span><br><span class="line">			else if(next(it)==mx.end())</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.erase(mxdiff.find(*it-*prev(it)));</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.erase(mxdiff.find(*next(it)-*it));</span><br><span class="line">				mxdiff.erase(mxdiff.find(*it-*prev(it)));</span><br><span class="line">				mxdiff.insert(*next(it)-*prev(it));</span><br><span class="line">			&#125;</span><br><span class="line">			mx.erase(mx.find(a[i]));</span><br><span class="line">			</span><br><span class="line">			a[i]=x;</span><br><span class="line">			it=mx.insert(a[i]);</span><br><span class="line">			if(it==mx.begin())</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.insert(*next(it)-*it);</span><br><span class="line">			&#125;</span><br><span class="line">			else if(next(it)==mx.end())</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.insert(*it-*prev(it));</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				mxdiff.insert(*next(it)-*it);</span><br><span class="line">				mxdiff.insert(*it-*prev(it));</span><br><span class="line">				mxdiff.erase(mxdiff.find(*next(it)-*prev(it)));</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			cout&lt;&lt;(*prev(mx.end()))+(*prev(mxdiff.end()))&lt;&lt;&quot; &quot;;</span><br><span class="line">		&#125;</span><br><span class="line">		cout&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag"># 红黑树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/27/Codeforces-1838E-Count-Supersequences/" rel="prev" title="Codeforces 1838E Count Supersequences">
+      <i class="fa fa-chevron-left"></i> Codeforces 1838E Count Supersequences
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4"><span class="nav-number">2.</span> <span class="nav-text">数据范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">crazybull</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">crazybull</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
