@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"crazy-bull.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题意    有 n 个正整数的数列 s ，从中等概率挑出一个 a 告诉玩家 A，再等概率挑出一个 b 告诉玩家 B，再把 a|b 同时告诉两位玩家。（可以挑选重复的下标）     由 A 开始进行游戏，此时如果他能确定 a 和 b 的大小关系（大于，小于，相等），则游戏结束，否则他会告诉对方他无法确定，这记为一轮游戏。然后游戏轮到 B 进行，若没结束再轮到 A，依次类推。。。     注意 A 和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces 1864E Guess Game">
+<meta property="og:url" content="https://crazy-bull.github.io/2023/08/30/Codeforces-1864E-Guess-Game/index.html">
+<meta property="og:site_name" content="Crazy_Bull&#39;s Blog">
+<meta property="og:description" content="题意    有 n 个正整数的数列 s ，从中等概率挑出一个 a 告诉玩家 A，再等概率挑出一个 b 告诉玩家 B，再把 a|b 同时告诉两位玩家。（可以挑选重复的下标）     由 A 开始进行游戏，此时如果他能确定 a 和 b 的大小关系（大于，小于，相等），则游戏结束，否则他会告诉对方他无法确定，这记为一轮游戏。然后游戏轮到 B 进行，若没结束再轮到 A，依次类推。。。     注意 A 和">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-30T09:19:23.000Z">
+<meta property="article:modified_time" content="2023-08-30T09:44:58.296Z">
+<meta property="article:author" content="crazybull">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="博弈">
+<meta property="article:tag" content="字典树">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://crazy-bull.github.io/2023/08/30/Codeforces-1864E-Guess-Game/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Codeforces 1864E Guess Game | Crazy_Bull's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Crazy_Bull's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-oi-notes">
+
+    <a href="/categories/OI" rel="section"><i class="fa fa-code fa-fw"></i>OI notes</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/30/Codeforces-1864E-Guess-Game/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="crazybull">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crazy_Bull's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces 1864E Guess Game
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-08-30 17:19:23 / Modified: 17:44:58" itemprop="dateCreated datePublished" datetime="2023-08-30T17:19:23+08:00">2023-08-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OI/" itemprop="url" rel="index"><span itemprop="name">OI</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><pre><code>    有 n 个正整数的数列 s ，从中等概率挑出一个 a 告诉玩家 A，再等概率挑出一个 b 告诉玩家 B，再把 a|b 同时告诉两位玩家。（可以挑选重复的下标）
+    由 A 开始进行游戏，此时如果他能确定 a 和 b 的大小关系（大于，小于，相等），则游戏结束，否则他会告诉对方他无法确定，这记为一轮游戏。然后游戏轮到 B 进行，若没结束再轮到 A，依次类推。。。
+    注意 A 和 B 对初始数列一无所知，且他们都足够聪明，且只会在有把握的情况下结束游戏。
+    问游戏进行的期望轮数。
+</code></pre><h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;= n &lt;= 2·10<sup>5</sup><br>1 &lt;= s<sub>i</sub> &lt;= 2<sup>30</sup><br><span id="more"></span></p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p><strong>首先考虑对于一组特定的 a 与 b，如何求出其游戏轮数。</strong></p>
+<p>以下记正整数 x 从右向左的第 i 个二进制位（从 0 开始）为 <script type="math/tex">x[i]</script> 。<br>若 <script type="math/tex">(a|b)[i] = 0</script> ，则 <script type="math/tex">a[i] = b[i] = 0</script> ，这是两人的公共信息，因此这些位在两人眼中都无需考虑。</p>
+<p>我们记 <script type="math/tex">i_{1} > i_{2} > ... > i_{m}</script> 为所有满足 <script type="math/tex">(a|b)[i_{k}] = 1</script> 的正整数。<br><br>先轮到 A，若 <script type="math/tex">a[i_{1}] = 0</script>，则 A 能确定 <script type="math/tex">b[i_{1}] = 1</script>，从而 a &lt; b，游戏结束。<br><br>若游戏没有结束，则 <script type="math/tex">a[i_{1}] = 1</script>，且这个信息可以被 B 确定，是公共信息（否则游戏在第一轮结束）。<br><br>此时轮到 B，若 <script type="math/tex">b[i_{1}] = 0 \lor b[i_{2}] = 0</script>，则 B 能确定 b &lt; a，游戏结束。<br><br>若游戏没有结束，则 <script type="math/tex">b[i_{1}] = 1 \land b[i_{2}] = 1</script>，同样为公共信息。</p>
+<p>依次类推，在第 k 轮时，公共信息为：<br><br>若 k 是奇数，<script type="math/tex">a[i_{1}] = a[i_{2}] = ... = a[i_{k}] = 1, b[i_{1}] = b[i_{2}] = ... = b[i_{k-1}] = 1</script> 。<br><br>若 k 是偶数，<script type="math/tex">a[i_{1}] = a[i_{2}] = ... = a[i_{k-1}] = 1, b[i_{1}] = b[i_{2}] = ... = b[i_{k}] = 1</script> 。</p>
+<p>于是，若 a &lt; b，且 t 为满足 <script type="math/tex">a[i_{t}] = 0</script> 的最小正整数，则游戏轮数为 <script type="math/tex">t + [t \% 2 == 0]</script> 。<br><br>同理，若 a &gt; b，且 t 为满足 <script type="math/tex">b[i_{t}] = 0</script> 的最小正整数，则游戏轮数为 <script type="math/tex">t + [t \% 2 == 1]</script> 。<br><br>若 a = b，则游戏轮数为 m + 1<br>（证明由数学归纳法不难得出，读者可自行证明）</p>
+<p>注意到若两个下标不同，则 (a, b) 与 (b, a) 在结果中均有一次贡献，因此可以合并计算。<br><br>即对于 a &lt; b，无序数对 (a, b) 的贡献为 2t + 1，t 为满足 <script type="math/tex">a[i_{t}] = 0</script> 的最小正整数。<br><br>由于 <script type="math/tex">a[i_{t}] = 0</script> 时，<script type="math/tex">b[i_{t}] = 1</script>，等价于找到从中向右第一个使得 a 与 b 不同的二进制位。</p>
+<p><br><br></p>
+<p><strong>处理这种问题的常用数据结构为 01-trie（01-字典树）。</strong></p>
+<p>简单来说，01-trie 是一棵二叉树，每条向下的边代表一个二进制位（向左权为 0，向右为 1），每个叶子节点代表一个 s 中的数（重复的数只占用一个节点，但会累加节点的权重），从树根向下到叶子节点的边权依次排列就是这个数的二进制表示。<br>该数据结构的具体实现实现和更多的应用可以参考 oi-wiki，笔者后续可能也会写一篇关于该数据结构的博客。</p>
+<p>回到本题，我们在 01-trie 中任取两个叶子结点 a 与 b，它们所对应的 t 值如何计算呢？<br><br>事实上，寻找 a 与 b 的 LCA（最近公共祖先），从根到 LCA 的路径的边权总和（即 1 边数目）即为 t - 1，因为 a 与 b 的前 t - 1 个非零位相同而在下一位上不同。</p>
+<p>于是我们遍历每个可能的 LCA （事实上，遍历所有非叶结点），若其有左右子树，则左右子树中各取一个的对答案的贡献均相同，故该结点对答案的贡献如下：</p>
+<script type="math/tex; mode=display">
+S = size(左子树) * size(右子树) * (2 * (根到该结点的路径权和 + 1) + 1)</script><p>这里的 size 表示一棵树的叶结点总数（不去重）。</p>
+<p>最后，对于每个叶结点，其自身元素互相间也会产生贡献：</p>
+<script type="math/tex; mode=display">
+S = size(自身) ^ {2} * (根到该结点的路径权和 + 1)</script><p>因此维护每个结点含有的叶结点总数和根到该节点的路径权和即可。<br>最终贡献除以 n ^ 2，等效于乘以 n ^ (MOD - 3)<br>复杂度：O(nlogA)</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line"></span><br><span class="line">const int MOD=998244353;</span><br><span class="line">ll fpow(ll a,ll k)</span><br><span class="line">{</span><br><span class="line">	ll res = 1;</span><br><span class="line">	while(k)</span><br><span class="line">	{</span><br><span class="line">		if(k&amp;1) res=res*a%MOD;</span><br><span class="line">		a=a*a%MOD; </span><br><span class="line">		k&gt;&gt;=1;</span><br><span class="line">	}</span><br><span class="line">	return res%MOD;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">//01-trie</span><br><span class="line">const int TC=200000*31;		//树的节点数 </span><br><span class="line">ll size[TC],pref1[TC],nxt[TC][2];	//分别对应节点包含叶节点的数目，前缀1的数目和孩子节点下标（0为空） </span><br><span class="line">int nodes = 0;	//当前节点数 </span><br><span class="line"></span><br><span class="line">void insert(int x)</span><br><span class="line">{</span><br><span class="line">	int n=1;	//根节点出发 </span><br><span class="line">	for(int i=29;i&gt;=0;i--)</span><br><span class="line">	{</span><br><span class="line">		int b=(x&gt;&gt;i)&amp;1;</span><br><span class="line">		if(!nxt[n][b])</span><br><span class="line">		{</span><br><span class="line">			//创建新节点 </span><br><span class="line">			nxt[n][b]=(++nodes);</span><br><span class="line">			pref1[nodes]=pref1[n]+b;</span><br><span class="line">			nxt[nodes][0]=nxt[nodes][1]=0;</span><br><span class="line">			size[nodes]=0;</span><br><span class="line">		}</span><br><span class="line">		size[n]++;</span><br><span class="line">		n=nxt[n][b];</span><br><span class="line">	}</span><br><span class="line">	size[n]++;	//更新叶节点的数目</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int t,n,a;</span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">	ios::sync_with_stdio(false);</span><br><span class="line">	cin.tie(0);</span><br><span class="line">	cout.tie(0);</span><br><span class="line">	</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	while(t--)</span><br><span class="line">	{</span><br><span class="line">		//样例间清空</span><br><span class="line">		nodes=1;</span><br><span class="line">		size[1]=pref1[1]=nxt[1][1]=nxt[1][0]=0;</span><br><span class="line">		</span><br><span class="line">		cin&gt;&gt;n;</span><br><span class="line">		for(int i=1;i&lt;=n;i++) </span><br><span class="line">		{</span><br><span class="line">			cin&gt;&gt;a;</span><br><span class="line">			insert(a);</span><br><span class="line">		}</span><br><span class="line">		</span><br><span class="line">		ll ans=0;</span><br><span class="line">		for(int i=1;i&lt;=nodes;i++)</span><br><span class="line">		{</span><br><span class="line">			//所有在同一非叶节点两侧的节点一一配对 </span><br><span class="line">			if (nxt[i][0] &amp;&amp; nxt[i][1])</span><br><span class="line">			{</span><br><span class="line">        			ans += (2 * pref1[i] + 3) * size[nxt[i][0]] * size[nxt[i][1]];</span><br><span class="line">    			}</span><br><span class="line">    			//叶节点自身相互配对 </span><br><span class="line">    			if (!nxt[i][0] &amp;&amp; !nxt[i][1])</span><br><span class="line">			{</span><br><span class="line">        			ans += (pref1[i] + 1) * size[i] * size[i];</span><br><span class="line">    			}</span><br><span class="line">		}</span><br><span class="line">		</span><br><span class="line">		ans%=MOD;</span><br><span class="line">		ans*=fpow(n,MOD-3);	//(n^2)*(n^(p-3))模p余1 </span><br><span class="line">		ans%=MOD;</span><br><span class="line">		cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">	}</span><br><span class="line">	return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%8D%9A%E5%BC%88/" rel="tag"># 博弈</a>
+              <a href="/tags/%E5%AD%97%E5%85%B8%E6%A0%91/" rel="tag"># 字典树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/29/Codeforces-1862G-The-Great-Equalizer/" rel="prev" title="Codeforces 1862G The Great Equalizer">
+      <i class="fa fa-chevron-left"></i> Codeforces 1862G The Great Equalizer
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%8C%83%E5%9B%B4"><span class="nav-number">2.</span> <span class="nav-text">数据范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">crazybull</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">crazybull</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
