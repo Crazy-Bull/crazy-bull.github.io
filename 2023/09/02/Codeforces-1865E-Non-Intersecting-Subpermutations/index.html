@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"crazy-bull.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="题意    有一个长为 n 的数组 a，元素均为 [1, k] 内的整数，求有多少个长为 m 的数组 b，元素同样为 [1, k] 内的整数， 且包含 a 为其子序列，答案对 1e9+7 取模。  * 注：子序列可以不连续 数据范围1 &lt;&#x3D; n &lt;&#x3D; 2·105n &lt;&#x3D; m &lt;&#x3D; 1091 &lt;&#x3D; k &lt;&#x3D; 1091 &lt;&#x3D; ai &lt;&#x3D; 109">
+  <meta name="description" content="题意对于一个长为 n，元素均为 [1, k] 间的整数的数列 a，记 f(a) 为 a 中能选出满足如下条件的子列的最大数目：  子列是连续的且互不重叠 每个子列的元素恰为 1~k 的一个排列  对所有长为 n，元素均为 [1, k] 的数列 a，求 \sum_{a} f(a) 数据范围2 &lt;&#x3D; k &lt;&#x3D; n &lt;&#x3D; 4000">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Codeforces 1838E Count Supersequences">
-<meta property="og:url" content="https://crazy-bull.github.io/2023/08/27/Codeforces-1838E-Count-Supersequences/index.html">
+<meta property="og:title" content="Codeforces 1865E Non-Intersecting Subpermutations">
+<meta property="og:url" content="https://crazy-bull.github.io/2023/09/02/Codeforces-1865E-Non-Intersecting-Subpermutations/index.html">
 <meta property="og:site_name" content="Crazy_Bull&#39;s Blog">
-<meta property="og:description" content="题意    有一个长为 n 的数组 a，元素均为 [1, k] 内的整数，求有多少个长为 m 的数组 b，元素同样为 [1, k] 内的整数， 且包含 a 为其子序列，答案对 1e9+7 取模。  * 注：子序列可以不连续 数据范围1 &lt;&#x3D; n &lt;&#x3D; 2·105n &lt;&#x3D; m &lt;&#x3D; 1091 &lt;&#x3D; k &lt;&#x3D; 1091 &lt;&#x3D; ai &lt;&#x3D; 109">
+<meta property="og:description" content="题意对于一个长为 n，元素均为 [1, k] 间的整数的数列 a，记 f(a) 为 a 中能选出满足如下条件的子列的最大数目：  子列是连续的且互不重叠 每个子列的元素恰为 1~k 的一个排列  对所有长为 n，元素均为 [1, k] 的数列 a，求 \sum_{a} f(a) 数据范围2 &lt;&#x3D; k &lt;&#x3D; n &lt;&#x3D; 4000">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-27T06:43:12.000Z">
-<meta property="article:modified_time" content="2023-08-27T07:11:31.386Z">
+<meta property="article:published_time" content="2023-09-02T03:11:09.000Z">
+<meta property="article:modified_time" content="2023-09-02T04:34:49.876Z">
 <meta property="article:author" content="crazybull">
-<meta property="article:tag" content="组合">
+<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="组合计数">
+<meta property="article:tag" content="滚动数组">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://crazy-bull.github.io/2023/08/27/Codeforces-1838E-Count-Supersequences/">
+<link rel="canonical" href="https://crazy-bull.github.io/2023/09/02/Codeforces-1865E-Non-Intersecting-Subpermutations/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>Codeforces 1838E Count Supersequences | Crazy_Bull's Blog</title>
+  <title>Codeforces 1865E Non-Intersecting Subpermutations | Crazy_Bull's Blog</title>
   
 
 
@@ -273,7 +275,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/08/27/Codeforces-1838E-Count-Supersequences/">
+    <link itemprop="mainEntityOfPage" href="https://crazy-bull.github.io/2023/09/02/Codeforces-1865E-Non-Intersecting-Subpermutations/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -286,7 +288,7 @@ mjx-container[display="true"] + br {
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Codeforces 1838E Count Supersequences
+          Codeforces 1865E Non-Intersecting Subpermutations
         </h1>
 
         <div class="post-meta">
@@ -297,7 +299,7 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-08-27 14:43:12 / Modified: 15:11:31" itemprop="dateCreated datePublished" datetime="2023-08-27T14:43:12+08:00">2023-08-27</time>
+              <time title="Created: 2023-09-02 11:11:09 / Modified: 12:34:49" itemprop="dateCreated datePublished" datetime="2023-09-02T11:11:09+08:00">2023-09-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,20 +322,38 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><pre><code>    有一个长为 n 的数组 a，元素均为 [1, k] 内的整数，求有多少个长为 m 的数组 b，元素同样为 [1, k] 内的整数，
-且包含 a 为其子序列，答案对 1e9+7 取模。
-
-* 注：子序列可以不连续
-</code></pre><h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>1 &lt;= n &lt;= 2·10<sup>5</sup><br>n &lt;= m &lt;= 10<sup>9</sup><br>1 &lt;= k &lt;= 10<sup>9</sup><br>1 &lt;= a<sub>i</sub> &lt;= 10<sup>9</sup></p>
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>对于一个长为 n，元素均为 [1, k] 间的整数的数列 a，记 f(a) 为 a 中能选出满足如下条件的子列的最大数目：</p>
+<ul>
+<li>子列是连续的且互不重叠</li>
+<li>每个子列的元素恰为 1~k 的一个排列</li>
+</ul>
+<p>对所有长为 n，元素均为 [1, k] 的数列 a，求 <script type="math/tex">\sum_{a} f(a)</script></p>
+<h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>2 &lt;= k &lt;= n &lt;= 4000</p>
 <span id="more"></span>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>数据范围要求时间复杂度应尽可能避免与 m，k 有关，因此朴素的 dp 是行不通的。但是我们不妨先考虑如果 n, m 不大时的 dp 做法。事实上，这会导出一个有用的结论，从而把时间复杂度优化到 O(nlogM) （此处 M 指模数）</p>
-<p>令 dp[i][j] 为包含前 i 个元素为其子序列，长为 j 的数组个数。则不难得出状态转移方程：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = (k-1) dp[i][j-1] + dp[i-1][j-1] (1 &lt;= i &lt;= j)</span><br><span class="line">dp[i][i] = 1</span><br><span class="line">dp[0][j] = k^j</span><br></pre></td></tr></table></figure><br>初始条件由 dp 数组的意义显然，转移方程的第一项代表 b<sub>j</sub> 不为 a<sub>i</sub> 时，b 的前 j-1 项包含 a 的前 i 项为子序列，此时 b<sub>j</sub> 共有 k-1 种取值；同理，第二项代表 b<sub>j</sub> 为 a<sub>i</sub> 时，b 的前 j-1 项包含 a 的前 i-1 项为子序列，，此时 b<sub>j</sub> 只有 1 种取值（即a<sub>i</sub>）</p>
-<p>我们注意到，状态转移方程与数组 a 完全无关，这也意味着答案<strong>与 a<sub>i</sub> 的取值无关</strong>，从而我们可以设 <strong>a<sub>i</sub> = 1</strong> (1 &lt;= i &lt;= n)</p>
-<p>当然，b 包含 n 个 1 作为其子序列，当且仅当 b 中包含 n 或更多的 1。考虑到复杂度应与 n 相关，故转化为所有可能的 b 数列减去包含 0 ~ n-1 个 1 的数列个数，而恰包含 i 个 1 的数列个数为 <script type="math/tex">C_{m}^{i} \bullet (k-1)^{m-i}</script></p>
-<p>因此答案为</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>首先，对于一个给定的数组 a，如何求 f(a)？<br>答：采用贪心的解法即可。从头开始依次判断每个长为 k 的连续子列是否是 1~k 的一个排列，如果是就选择它，并从该子列尾之后继续判断，知道数列尾，最终选到的子列总数即为 f(a)。</p>
+<p>按照这个思路，如果在 a 后加入一个数，在什么情况下 f(a) 会增加 1？<br>答：a 的末尾恰有 k - 1 个不同的数（且与已选择的子列不重叠），且添加的数恰不与这 k - 1 个数重复。<br>于是我们定义 a 的 <strong>尾数： rem(a)</strong> 为 a 从后向前能连续取到的最多的两两不同的数，且这些数不与已选择的子列重复。</p>
+<p>那么下一个问题是：在什么情况下 a 后加入一个数后，rem(a) 变为 k - 1？<br>答：原先 rem(a) = k - 2，且添加的数恰不与这 k - 2 个数重复。<br>或者 rem(a) = k - 1，且添加的数与原先 a 的倒数第 k - 1 个数相同。</p>
+<p>以此类推，我们会发现动态规划可以这个问题。<br>记 <script type="math/tex">dp_{i.j,r}</script> 为长为 i，有 j 组已选择子列，尾数 rem = r 的数列总数。<br><br>由于 0 &lt;= i &lt;= n, 0 &lt;= j &lt;= n / k, 0 &lt;= r &lt; k<br>从而总状态数不超过 O(ijk) = O(n^2)，只需在 O(1) 内完成状态转移即可。</p>
+<p>显然我们有：</p>
 <script type="math/tex; mode=display">
-k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂的计算可用递推处理，逆元使用快速幂处理即可（有费马小定理，x 关于素数 p 的逆元为 x<sup>p-2</sup>）</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">const int MOD=1e9+7, N=2e5+10;</span><br><span class="line">int t,n,m,k,a;</span><br><span class="line"></span><br><span class="line">ll fpow(ll a,ll k)</span><br><span class="line">{</span><br><span class="line">	ll res = 1;</span><br><span class="line">	while(k)</span><br><span class="line">	{</span><br><span class="line">		if(k&amp;1) res=res*a%MOD;</span><br><span class="line">		a=a*a%MOD; </span><br><span class="line">		k&gt;&gt;=1;</span><br><span class="line">	}</span><br><span class="line">	return res%MOD;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	while(t--)</span><br><span class="line">	{</span><br><span class="line">		cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;</span><br><span class="line">		for(int i=1;i&lt;=n;i++) cin&gt;&gt;a;</span><br><span class="line">		</span><br><span class="line">		ll ans=fpow(k,m),rev=fpow(k-1,MOD-2),sub=fpow(k-1,m);</span><br><span class="line">		ans-=sub;</span><br><span class="line">		if(ans&lt;0) ans+=MOD;</span><br><span class="line">		for(int i=1;i&lt;n;i++)</span><br><span class="line">		{</span><br><span class="line">			sub=sub*rev%MOD;</span><br><span class="line">			sub=sub*(m+1-i)%MOD;</span><br><span class="line">			sub=sub*fpow(i,MOD-2)%MOD;</span><br><span class="line">			ans-=sub;</span><br><span class="line">			if(ans&lt;0) ans+=MOD;</span><br><span class="line">		}</span><br><span class="line">		cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">	}</span><br><span class="line">	return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+dp_{0,0,0} = 1</script><script type="math/tex; mode=display">
+dp_{i,0,0} = 0\space\space\space (i\neq0)</script><script type="math/tex; mode=display">
+dp_{i,j,r} = 0\space\space\space (i<jk+r)</script><p>接下来考虑状态转移方程：</p>
+<blockquote>
+<p>按照这个思路，如果在 a 后加入一个数，在什么情况下 f(a) 会增加 1？<br>答：a 的末尾恰有 k - 1 个不同的数（且与已选择的子列不重叠），且添加的数恰不与这 k - 1 个数重复。</p>
+</blockquote>
+<p>注意到 f(a) 增加后 rem(a) 变为 0，于是我们有：</p>
+<script type="math/tex; mode=display">
+dp_{i,j,0} = dp_{i-1,j-1,k-1}\space\space\space (i>0,j>0)</script><blockquote>
+<p>那么下一个问题是：在什么情况下 a 后加入一个数后，rem(a) 变为 k - 1？<br>答：原先 rem(a) = k - 2，且添加的数恰不与这 k - 2 个数重复。<br>或者 rem(a) = k - 1，且添加的数与原先 a 的倒数第 k - 1 个数相同。</p>
+</blockquote>
+<p>扩展一下，在什么情况下 a 后加入一个数后，rem(a) 变为 r &gt; 0？<br>答：原先 rem(a) = r - 1，且添加的数恰不与这 r - 1 个数重复（共 k - r + 1 种情况）。<br>或者 r &lt;= rem(a) &lt;= k - 1，且添加的数与原先 a 的倒数第 r 个数相同。</p>
+<p>于是我们有：</p>
+<script type="math/tex; mode=display">
+dp_{i,j,r} = (k - r + 1)dp_{i-1,j,r-1} +\sum_{x=r}^{k-1}dp_{i-1,j,x} \space\space\space (i>0)</script><p>于是我们维护上式结尾的前缀和即可。</p>
+<p>时间复杂度 O(n^2)<br>空间复杂度可以用滚动数组优化至 O(n)，本例中不优化也能过</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef long long ll;</span><br><span class="line">const int N = 4000 + 10, MOD = 998244353;</span><br><span class="line">ll dp[2][2 * N], sum[2][2 * N], ans;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">{</span><br><span class="line">	int n, k;</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	dp[0][0 * k + 0] = 1;</span><br><span class="line">	for (int i = 0; i &lt; k; i++) sum[0][i] = 1;</span><br><span class="line"></span><br><span class="line">	for (int len = 1; len &lt;= n; len++)</span><br><span class="line">	{</span><br><span class="line">		for (int grp = 0; grp &lt;= n / k; grp++)</span><br><span class="line">		{</span><br><span class="line">			for (int rem = 0; rem &lt; k; rem++)</span><br><span class="line">			{</span><br><span class="line">				int ind = grp * k + rem;</span><br><span class="line">				if ((ind == 0) || (ind &gt; len))</span><br><span class="line">				{</span><br><span class="line">					dp[len &amp; 1][ind] = 0;</span><br><span class="line">					if (ind &gt; len) sum[len &amp; 1][ind] = sum[len &amp; 1][ind - 1];</span><br><span class="line">					continue;</span><br><span class="line">				}</span><br><span class="line">				if (rem == 0)</span><br><span class="line">				{</span><br><span class="line">					dp[len &amp; 1][ind] = dp[!(len &amp; 1)][ind - 1];</span><br><span class="line">					sum[len &amp; 1][ind] = dp[len &amp; 1][ind];</span><br><span class="line">				}</span><br><span class="line">				else</span><br><span class="line">				{</span><br><span class="line">					dp[len &amp; 1][ind] = dp[!(len &amp; 1)][ind - 1] * (k - rem + 1) + sum[!(len &amp; 1)][grp * k + (k - 1)] - sum[!(len &amp; 1)][grp * k + (rem - 1)];</span><br><span class="line">					dp[len &amp; 1][ind] %= MOD;</span><br><span class="line">					sum[len &amp; 1][ind] = sum[len &amp; 1][ind - 1] + dp[len &amp; 1][ind];</span><br><span class="line">					sum[len &amp; 1][ind] %= MOD;</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	for (int grp = 1; grp &lt;= n / k; grp++)</span><br><span class="line">	{</span><br><span class="line">		ans += grp * sum[n &amp; 1][grp * k + (k - 1)];</span><br><span class="line">	}</span><br><span class="line">	cout &lt;&lt; ans % MOD &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -342,7 +362,9 @@ k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂�
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%BB%84%E5%90%88/" rel="tag"># 组合</a>
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+              <a href="/tags/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0/" rel="tag"># 组合计数</a>
+              <a href="/tags/%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84/" rel="tag"># 滚动数组</a>
           </div>
 
         
@@ -351,13 +373,10 @@ k^{m}-\sum_{i=0}^{n-1} C_{m}^{i} \bullet (k-1)^{m-i}</script><p>组合数和幂�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/08/23/Introduction/" rel="prev" title="博客介绍">
-      <i class="fa fa-chevron-left"></i> 博客介绍
+    <a href="/2023/08/30/Codeforces-1864E-Guess-Game/" rel="prev" title="Codeforces 1864E Guess Game">
+      <i class="fa fa-chevron-left"></i> Codeforces 1864E Guess Game
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/08/29/Codeforces-1862G-The-Great-Equalizer/" rel="next" title="Codeforces 1862G The Great Equalizer">
-      Codeforces 1862G The Great Equalizer <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
